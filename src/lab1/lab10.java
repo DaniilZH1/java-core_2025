@@ -18,6 +18,5 @@ public class lab10 {
 
         System.out.println("Сумма = " + sum);
         System.out.println("Разность = " + difference);
-
     }
 }
