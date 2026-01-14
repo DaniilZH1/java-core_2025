@@ -44,7 +44,6 @@ public class CopyConsonantWords {
                 }
 
                 // Пишем в новый файл: номер строки + количество + слова
-                // (строки без подходящих слов тоже можно писать — по требованию не запрещено)
                 bw.write("Строка " + lineNo + " | слов: " + count);
                 bw.newLine();
                 bw.write(selected.toString());
