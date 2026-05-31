@@ -1,4 +1,4 @@
-package lab8;
+package lab8_1;
 
 import java.io.*;
 import java.net.URL;
