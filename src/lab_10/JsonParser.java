@@ -7,7 +7,6 @@ import org.json.simple.parser.JSONParser;
 
 public class JsonParser {
     public static void main(String[] args) {
-
         try {
             JSONParser parser = new JSONParser();
 

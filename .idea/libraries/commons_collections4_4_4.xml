@@ -2,6 +2,7 @@
   <library name="commons-collections4-4.4">
     <CLASSES>
       <root url="jar://F:/GAMES/commons-collections4-4.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections4-4.4.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

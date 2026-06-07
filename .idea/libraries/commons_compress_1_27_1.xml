@@ -2,8 +2,13 @@
   <library name="commons-compress-1.27.1">
     <CLASSES>
       <root url="jar://F:/GAMES/commons-compress-1.27.1.jar!/" />
+      <root url="file://$PROJECT_DIR$/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <excluded>
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-1.27.1.jar!/" />
+    </excluded>
+    <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
   </library>
 </component>
