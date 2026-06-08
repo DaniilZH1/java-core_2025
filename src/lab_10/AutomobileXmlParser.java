@@ -10,12 +10,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.File;
+import java.util.Scanner;
 
 public class AutomobileXmlParser {
 
     public static void main(String[] args) {
 
         try {
+
+            Scanner scanner = new Scanner(System.in);
 
             File xmlFile = new File("src/lab_10/automobile.xml");
 
@@ -41,40 +44,6 @@ public class AutomobileXmlParser {
 
             for (int i = 0; i < automobileList.getLength(); i++) {
 
-                Node node = automobileList.item(i);
-
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-                    Element automobile = (Element) node;
-
-                    System.out.println(
-                            automobile.getElementsByTagName("brand")
-                                    .item(0)
-                                    .getTextContent()
-                                    + " "
-                                    +
-                                    automobile.getElementsByTagName("model")
-                                            .item(0)
-                                            .getTextContent()
-                                    + " "
-                                    +
-                                    automobile.getElementsByTagName("year")
-                                            .item(0)
-                                            .getTextContent()
-                    );
-                }
-            }
-
-            // Поиск по марке
-
-            String searchBrand = "BMW";
-
-            System.out.println(
-                    "\nПоиск автомобилей марки "
-                            + searchBrand + ":");
-
-            for (int i = 0; i < automobileList.getLength(); i++) {
-
                 Element automobile =
                         (Element) automobileList.item(i);
 
@@ -83,36 +52,50 @@ public class AutomobileXmlParser {
                                 .item(0)
                                 .getTextContent();
 
-                if (brand.equalsIgnoreCase(searchBrand)) {
+                String model =
+                        automobile.getElementsByTagName("model")
+                                .item(0)
+                                .getTextContent();
 
-                    System.out.println(
-                            brand + " "
-                                    + automobile
-                                    .getElementsByTagName("model")
-                                    .item(0)
-                                    .getTextContent()
-                    );
-                }
+                String year =
+                        automobile.getElementsByTagName("year")
+                                .item(0)
+                                .getTextContent();
+
+                System.out.println(
+                        "Марка: " + brand +
+                                ", Модель: " + model +
+                                ", Год: " + year
+                );
             }
-
 
             // Добавление автомобиля
 
+            System.out.println("\nДобавление нового автомобиля");
+
+            System.out.print("Введите марку: ");
+            String newBrand = scanner.nextLine();
+
+            System.out.print("Введите модель: ");
+            String newModel = scanner.nextLine();
+
+            System.out.print("Введите год выпуска: ");
+            String newYear = scanner.nextLine();
 
             Element newCar =
                     doc.createElement("automobile");
 
             Element brand =
                     doc.createElement("brand");
-            brand.setTextContent("Mercedes");
+            brand.setTextContent(newBrand);
 
             Element model =
                     doc.createElement("model");
-            model.setTextContent("E200");
+            model.setTextContent(newModel);
 
             Element year =
                     doc.createElement("year");
-            year.setTextContent("2022");
+            year.setTextContent(newYear);
 
             newCar.appendChild(brand);
             newCar.appendChild(model);
@@ -122,14 +105,117 @@ public class AutomobileXmlParser {
                     .appendChild(newCar);
 
             System.out.println(
-                    "\nДобавлен автомобиль Mercedes E200");
+                    "Автомобиль успешно добавлен.");
 
-            // Удаление автомобиля
+            // Поиск по марке
 
-            String deleteModel = "Camry";
+            System.out.print(
+                    "\nВведите марку для поиска: ");
+
+            String searchBrand =
+                    scanner.nextLine();
+
+            boolean found = false;
+
+            System.out.println(
+                    "\nРезультаты поиска:");
+
+            NodeList searchList =
+                    doc.getElementsByTagName("automobile");
+
+            for (int i = 0; i < searchList.getLength(); i++) {
+
+                Element automobile =
+                        (Element) searchList.item(i);
+
+                String currentBrand =
+                        automobile.getElementsByTagName("brand")
+                                .item(0)
+                                .getTextContent();
+
+                if (currentBrand.equalsIgnoreCase(searchBrand)) {
+
+                    found = true;
+
+                    System.out.println(
+                            "Модель: "
+                                    + automobile
+                                    .getElementsByTagName("model")
+                                    .item(0)
+                                    .getTextContent()
+                                    + ", Год: "
+                                    + automobile
+                                    .getElementsByTagName("year")
+                                    .item(0)
+                                    .getTextContent()
+                    );
+                }
+            }
+
+            if (!found) {
+                System.out.println(
+                        "Автомобили не найдены.");
+            }
+
+            // Поиск по году выпуска
+
+            System.out.print(
+                    "\nВведите год выпуска для поиска: ");
+
+            String searchYear =
+                    scanner.nextLine();
+
+            found = false;
+
+            System.out.println(
+                    "\nАвтомобили за указанный год:");
+
+            for (int i = 0; i < searchList.getLength(); i++) {
+
+                Element automobile =
+                        (Element) searchList.item(i);
+
+                String currentYear =
+                        automobile.getElementsByTagName("year")
+                                .item(0)
+                                .getTextContent();
+
+                if (currentYear.equals(searchYear)) {
+
+                    found = true;
+
+                    System.out.println(
+                            "Марка: "
+                                    + automobile
+                                    .getElementsByTagName("brand")
+                                    .item(0)
+                                    .getTextContent()
+                                    + ", Модель: "
+                                    + automobile
+                                    .getElementsByTagName("model")
+                                    .item(0)
+                                    .getTextContent()
+                    );
+                }
+            }
+
+            if (!found) {
+                System.out.println(
+                        "Автомобили не найдены.");
+            }
+
+            // Удаление автомобиля по модели
+
+            System.out.print(
+                    "\nВведите модель автомобиля для удаления: ");
+
+            String deleteModel =
+                    scanner.nextLine();
 
             NodeList cars =
                     doc.getElementsByTagName("automobile");
+
+            boolean deleted = false;
 
             for (int i = 0; i < cars.getLength(); i++) {
 
@@ -146,12 +232,18 @@ public class AutomobileXmlParser {
                     automobile.getParentNode()
                             .removeChild(automobile);
 
+                    deleted = true;
+
                     System.out.println(
-                            "Удалён автомобиль: "
-                                    + deleteModel);
+                            "Автомобиль удалён.");
 
                     break;
                 }
+            }
+
+            if (!deleted) {
+                System.out.println(
+                        "Модель не найдена.");
             }
 
             // Сохранение XML
